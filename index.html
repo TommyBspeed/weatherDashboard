@@ -21,90 +21,98 @@
     </nav>
     <div class="container">
       <div class="row">
-        <div class="col-sm-4 bg-light">
+        <div class="col-md-12 bg-light">
           <h4 class="pt-1"><strong>Search for a City:</strong></h4>
 
-          <div class="input-group mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="search-city"
-              aria-label="City Search"
-              aria-describedby="search-button"
-            />
-            <div class="input-group-append">
-              <button class="btn bg-primary text-light" id="searchButton">
-                <i class="fa fa-search"></i>
-              </button>
-            </div>
-          </div>
-          <ul class="list-group"></ul>
-        </div>
-        <div class="col-sm-8">
-          <div class="row ml-2 border border-dark rounded">
-            <div class="col-sm-12" id="current-weather">
-              <h3 class="city-name mb-1 mt-2 bolder" id="current-city"></h3>
-              <p::before<i class="fa-solid fa-temperature-half"></i>Temperature:<span class="current" id="temperature"></span></p>
-              <p::before<i class="fa-solid fa-droplet-degree"></i>Humidity:<span class="current" id="humidity"></span></p>
-              <p::before<i class="fa-solid fa-wind"></i>Wind Speed:<span class="current" id="wind-speed"></span></p>
-              <p::before<i class="fa-solid fa-temperature-sun"></i>
-                UV index:<span
-                  class="current bg-danger rounded py-2 px-2 text-white"
-                  id="uv-index"
-                ></span>
+         <div class="search">
+      <input id="text" type="text" rows="2" cols="25" placeholder="City name:"> </input>
+    </div>
+    <div id="search-btn">
+      <button id="btn">Search</button>
+      <div id="day-time"></div>
+      <hr id="line" />
+    </div>
+    <div class="col-4">
+      <ul class="list-group" id="history-list"></ul>
+    </div>
+  
+  
+      <div class="forecast" id="forecast"> 
+        <div class="col-8">
+          <div class="city-name" id="city-name" style="font-weight: 900;"></div>
+          <div class="temp" id="temp"></div>
+          <div class="wind" id="wind"></div>
+          <div class="humidity" id="humidity"></div>
+          <div class="uv-index" id="uv-index"></div>
+        <h1>5-Day Forecast:</h1>
+         </div>
+         <div id="5-day-forcast">
+         </div>
+      </div>
+      <!-- Make 5 cards for the 5-day forecast. -->
+      <section class="row justify-content-around" id="card-section">
+        
+        <div class="col-12 col-sm-6 col-lg-4 mb-3">
+          <div class="card text-bg-primary">
+            <div class="card-body">
+              <p class="card-text" id="day1">
+                <div class="date" id="date1" style="font-weight: 900;"></div>
+                <div class="temp" id="temp1"></div>
+                <div class="wind" id="wind1"></div>
+                <div class="humidity" id="humidity1"></div>
               </p>
             </div>
           </div>
-
-          <div class="col-sm-12" id="fiveDay">
-            <h3>Five-Day Forecast:</h3>
-            <div class="row text-light">
-              <div
-                class="col-sm-2 bg-primary forecast text-white ml-2 mb-3 p-2 mt-2 rounded"
-              >
-                <p id="fDate0"></p>
-                <p id="fImg0"></p>
-                <p::before<i class="fa-solid fa-temperature-half"></i>Temperature:<span id="tempDay0"></span></p>
-                <p>Humidity:<span id="humidityDay1"></span></p>
-              </div>
-              <div
-                class="col-sm-2 bg-primary forecast text-white ml-2 mb-3 p-2 mt-2 rounded"
-              >
-                <p id="fDate1"></p>
-                <p id="fImg1"></p>
-                <p::before<i class="fa-solid fa-temperature-half"></i>Temperature:<span id="tempDay1"></span></p>
-                <p>Humidity:<span id="humidityDay2"></span></p>
-              </div>
-              <div
-                class="col-sm-2 bg-primary forecast text-white ml-2 mb-3 p-2 mt-2 rounded"
-              >
-                <p id="fDate2"></p>
-                <p id="fImg2"></p>
-                <p::before<i class="fa-solid fa-temperature-half"></i>Temperature:<span id="tempDay2"></span></p>
-                <p>Humidity:<span id="humidityDay3"></span></p>
-              </div>
-              <div
-                class="col-sm-2 bg-primary forecast text-white ml-2 mb-3 p-2 mt-2 rounded"
-              >
-                <p id="fDate3"></p>
-                <p id="fImg3"></p>
-                <p::before<i class="fa-solid fa-temperature-half"></i>Temperature:<span id="tempDay3"></span></p>
-                <p>Humidity:<span id="humidityDay4"></span></p>
-              </div>
-              <div
-                class="col-sm-2 bg-primary forecast text-white ml-2 mb-3 p-2 mt-2 rounded"
-              >
-                <p id="fDate4"></p>
-                <p id="fImg4"></p>
-                <p::before<i class="fa-solid fa-temperature-half"></i>Temperature:<span id="tempDay4"></span></p>
-                <p>Humidity:<span id="humidityDay5"></span></p>
-              </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 mb-3">
+          <div class="card">
+            <div class="card-body text-bg-primary">
+              <p class="card-text" id="day2">
+                <div class="date" id="date2" style="font-weight: 900;"></div>
+                <div class="temp" id="temp2"></div>
+                <div class="wind" id="wind2"></div>
+                <div class="humidity" id="humidity2"></div>
+              </p>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
+        <div class="col-12 col-sm-6 col-lg-4 mb-3">
+          <div class="card">
+            <div class="card-body text-bg-primary">
+              <p class="card-text" id="day3">
+                <div class="date" id="date3" style="font-weight: 900;"></div>
+                <div class="temp" id="temp3"></div>
+                <div class="wind" id="wind3"></div>
+                <div class="humidity" id="humidity3"></div>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 mb-3">
+          <div class="card">
+            <div class="card-body text-bg-primary">
+              <p class="card-text" id="day4">
+                <div class="date" id="date4" style="font-weight: 900;"></div>
+                <div class="temp" id="temp4"></div>
+                <div class="wind" id="wind4"></div>
+                <div class="humidity" id="humidity4"></div>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 mb-3">
+          <div class="card">
+            <div class="card-body text-bg-primary">
+              <p class="card-text" id="day5">
+                <div class="date" id="date5" style="font-weight: 900;"></div>
+                <div class="temp" id="temp5"></div>
+                <div class="wind" id="wind5"></div>
+                <div class="humidity" id="humidity5"></div>
+              </p>
+            </div>
+          </div>
+        </div>
+      
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>

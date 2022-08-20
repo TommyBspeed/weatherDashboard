@@ -1,221 +1,142 @@
-//set searched city to local storage
+//set city input to local storage
 let city = localStorage.getItem("City");
-//set global variables
-var searchButton = $("#searchButton");
 //API key
-var apiKey = "8d1e4b7245cf1a7fdd063e7bea6ebb12";
+var apiKey = "058d7f01e802a6a38145ceba8a650527";
 //set date using a moment.js call
 var today = moment().format("L");
 
-// Function for current weather
-fetch(
-  "https://api.openweathermap.org/data/2.5/weather?q=" +
-    city +
-    "&units=imperial&appid=" +
-    apiKey,
-  function (data) {
-    //Create current weather variables
-    var conditions = "Conditions: " + data.weather[0].main;
-    var weatherIcon =
-      "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    var currentTemp = "Temperature: " + data.main.temp + " ℉";
-    var humidity = "Humidity: " + data.main.humidity + "%";
-    var windSpeed = "Wind Speed: " + data.wind.speed + " mph";
+//set global variables
+var searchButton = $("#searchButton");
+var cityName = $("#city-name");
+var temp = $("#temp");
+var wind = $("#wind");
+var humidity = $("#humidity");
+var uvi = $("#uv-index");
+var forecastEl = $("#forecast");
 
-    //get data for latitude and longitude
-    var lat = data.coord.lat;
-    var lon = data.coord.lon;
+//set variables for each individual day
+var date1 = $("#date1");
+var temp1 = $("#temp1");
+var wind1 = $("#wind1");
+var humidity1 = $("#humidity1");
 
-    $(".conditions").html(conditions);
-    $(".weather-icon").attr("src", weatherIcon);
-    $("#temperature").html(currentTemp);
-    $("#humidity").html(humidity);
-    $("#wind-speed").html(windSpeed);
+var date2 = $("#date2");
+var temp2 = $("#temp2");
+var wind2 = $("#wind2");
+var humidity2 = $("#humidity2");
 
-    //five day forecast
-    fetch(
-      "https://api.openweathermap.org/data/2.5/onecall?lat=" +
-        lat +
-        "&lon=" +
-        lon +
-        "&exclude=current,minutely,hourly,alers&units=imperial&appid=" +
-        apiKey,
+var date3 = $("#date3");
+var temp3 = $("#temp3");
+var wind3 = $("#wind3");
+var humidity3 = $("#humidity3");
 
-      function (data) {
-        //UV Index color coordinated by severity
-        var uvIndex = data.daily[0].uvi;
+var date4 = $("#date4");
+var temp4 = $("#temp4");
+var wind4 = $("#wind4");
+var humidity4 = $("#humidity4");
 
-        if (data.daily[0].uvi < 3) {
-          $(".uv-index").html("UV Index: " + uvIndex);
-          $(".uv-index").css("background-color", "rgb(37, 190, 37)");
-        }
-        if (data.daily[0].uvi >= 3 && data.daily[0].uvi < 6) {
-          $(".uv-index").html("UV Index: " + uvIndex);
-          $(".uv-index").css("background-color", "rgb(247, 247, 16)");
-        }
-        if (data.daily[0].uvi >= 6 && data.daily[0].uvi < 8) {
-          $(".uv-index").html("UV Index: " + uvIndex);
-          $(".uv-index").css("background-color", "orange");
-        }
-        if (data.daily[0].uvi >= 8 && data.daily[0].uvi < 11) {
-          $(".uv-index").html("UV Index: " + uvIndex);
-          $(".uv-index").css("background-color", "red");
-        }
-        if (data.daily[0].uvi >= 11) {
-          $(".uv-index").html("UV Index: " + uvIndex);
-          $(".uv-index").css("background-color", "rgb(174, 9, 207)");
-        }
+var date5 = $("#date5");
+var temp5 = $("#temp5");
+var wind5 = $("#wind5");
+var humidity5 = $("#humidity5");
 
-        //Day of the week + date for 5 consecutive days starting today
-        let dayOne = moment().format("ddd MMM Do");
-        let dayTwo = moment().add(1, "d").format("ddd MMM Do");
-        let dayThree = moment().add(2, "d").format("ddd MMM Do");
-        let dayFour = moment().add(3, "d").format("ddd MMM Do");
-        let dayFive = moment().add(4, "d").format("ddd MMM Do");
+//create a function to fetch the api
+function fetchApi() {
+  fetch(
+    "https://api.weatherbit.io/v2.0/current?&city=" +
+      cityEl +
+      "&units=imperial&key=" +
+      apiKey
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      cityName.text(data.data[0].city_name);
+      temp.text("temp: " + data.data[0].temp + " *F");
+      wind.text("wind: " + data.data[0].wind_spd + " MPH");
+      humidity.text("humidity: " + data.data[0].rh + "%");
+      uvi.text("UV Index: " + data.data[0].uvi);
+    });
 
-        //Access daily weather icon from API
-        let dayOneIcon =
-          "https://openweathermap.org/img/w/" +
-          data.daily[0].weather[0].icon +
-          ".png";
-        let dayTwoIcon =
-          "https://openweathermap.org/img/w/" +
-          data.daily[1].weather[0].icon +
-          ".png";
-        let dayThreeIcon =
-          "https://openweathermap.org/img/w/" +
-          data.daily[2].weather[0].icon +
-          ".png";
-        let dayFourIcon =
-          "https://openweathermap.org/img/w/" +
-          data.daily[3].weather[0].icon +
-          ".png";
-        let dayFiveIcon =
-          "https://openweathermap.org/img/w/" +
-          data.daily[4].weather[0].icon +
-          ".png";
+  fetch(
+    "https://api.weatherbit.io/v2.0/forecast/daily&days=[5]?city=" +
+      cityEl +
+      "&units=imperial&key=" +
+      apiKey
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
 
-        //Display daily weather icon from source
-        $("#fImg0").attr("src", dayOneIcon);
-        $("#fImg1").attr("src", dayTwoIcon);
-        $("#fImg2").attr("src", dayThreeIcon);
-        $("#fImg3").attr("src", dayFourIcon);
-        $("#fImg4").attr("src", dayFiveIcon);
+      date1.text(data.data[0].datetime);
 
-        //Creates values for day of week, weather condition, high, low, and humidity
-        var day1 = "<br>" + dayOne + "<br>";
-        var day1weather =
-          data.daily[0].weather[0].main +
-          "<br>" +
-          "High - " +
-          data.daily[0].temp.max +
-          " ℉" +
-          "<br>" +
-          "Low - " +
-          data.daily[0].temp.min +
-          " ℉" +
-          "<br>" +
-          "Humidity - " +
-          data.daily[0].humidity +
-          "%" +
-          "<br>";
-        var day2 = "<br>" + dayTwo + "<br>";
-        var day2weather =
-          data.daily[1].weather[0].main +
-          "<br>" +
-          "High - " +
-          data.daily[1].temp.max +
-          " ℉" +
-          "<br>" +
-          "Low - " +
-          data.daily[1].temp.min +
-          " ℉" +
-          "<br>" +
-          "Humidity - " +
-          data.daily[1].humidity +
-          "%" +
-          "<br>";
-        var day3 = "<br>" + dayThree + "<br>";
-        var day3weather =
-          data.daily[2].weather[0].main +
-          "<br>" +
-          "High - " +
-          data.daily[2].temp.max +
-          " ℉" +
-          "<br>" +
-          "Low - " +
-          data.daily[2].temp.min +
-          " ℉" +
-          "<br>" +
-          "Humidity - " +
-          data.daily[2].humidity +
-          "%" +
-          "<br>";
-        var day4 = "<br>" + dayFour + "<br>";
-        var day4weather =
-          data.daily[3].weather[0].main +
-          "<br>" +
-          "High - " +
-          data.daily[3].temp.max +
-          " ℉" +
-          "<br>" +
-          "Low - " +
-          data.daily[3].temp.min +
-          " ℉" +
-          "<br>" +
-          "Humidity - " +
-          data.daily[3].humidity +
-          "%" +
-          "<br>";
-        var day5 = "<br>" + dayFive + "<br>";
-        var day5weather =
-          data.daily[4].weather[0].main +
-          "<br>" +
-          "High - " +
-          data.daily[4].temp.max +
-          " ℉" +
-          "<br>" +
-          "Low - " +
-          data.daily[4].temp.min +
-          " ℉" +
-          "<br>" +
-          "Humidity - " +
-          data.daily[4].humidity +
-          "%" +
-          "<br>";
+      temp1.text("temp: " + data.data[0].temp + " *F");
+      wind1.text("wind: " + data.data[0].wind_spd + " MPH");
+      humidity1.text("humidity: " + data.data[0].rh + "%");
 
-        //Displays date + weather values in daily containers, before and after weather icon
-        $("#d1").html(day1);
-        $("#d1-1").html(day1weather);
-        $("#d2").html(day2);
-        $("#d2-1").html(day2weather);
-        $("#d3").html(day3);
-        $("#d3-1").html(day3weather);
-        $("#d4").html(day4);
-        $("#d4-1").html(day4weather);
-        $("#d5").html(day5);
-        $("#d5-1").html(day5weather);
-      }
-    );
+      date2.text(data.data[1].datetime);
+      temp2.text("temp: " + data.data[1].temp + " *F");
+      wind2.text("wind: " + data.data[1].wind_spd + " MPH");
+      humidity2.text("humidity: " + data.data[1].rh + "%");
+
+      date3.text(data.data[2].datetime);
+      temp3.text("temp: " + data.data[2].temp + " *F");
+      wind3.text("wind: " + data.data[2].wind_spd + " MPH");
+      humidity3.text("humidity: " + data.data[2].rh + "%");
+
+      date4.text(data.data[3].datetime);
+      temp4.text("temp: " + data.data[3].temp + " *F");
+      wind4.text("wind: " + data.data[3].wind_spd + " MPH");
+      humidity4.text("humidity: " + data.data[3].rh + "%");
+
+      date5.text(data.data[4].datetime);
+      temp5.text("temp: " + data.data[4].temp + " *F");
+      wind5.text("wind: " + data.data[4].wind_spd + " MPH");
+      humidity5.text("humidity: " + data.data[4].rh + "%");
+      $("#card-section").show();
+    });
+}
+
+var today = moment();
+$("#day-time").text(today.format("L"));
+
+var inputEl = $("#text");
+var historyEl = $("#history-list");
+var searchBtnEl = $("#btn");
+
+var printHistory = function (city) {
+  var listEl = $("<li>");
+  var cityEl = city;
+  listEl.addClass("list-group-item").text(cityEl);
+  listEl.appendTo(historyEl);
+};
+
+function searchCity(event) {
+  event.preventDefault();
+
+  var searchInput = inputEl.val();
+
+  if (!searchInput) {
+    return;
   }
-);
-//Add new list element to Recent Searches list after submitting search
-$("#searchButton").click(function (e) {
-  e.preventDefault();
-  let cityName = $("#search-city").val();
-  localStorage.setItem("City", cityName);
-  $(".currentLocation").html("Current Weather - " + cityName);
-  $("#search-city").val("");
-  let listEl = $("<li>");
-  listEl.text(cityName);
-  listEl.addClass("list-group-item");
-  $(".list-group").append(listEl);
-  citySearch(cityName);
+  cityEl = searchInput;
 
-  //Search prior city when clicked from search history list
-  listEl.click(function (e) {
-    let city = cityName;
-    citySearch(city);
-    $(".currentLocation").html("Current Weather - " + city);
+  printHistory(searchInput);
+
+  // Run the fetch APi
+  fetchApi();
+
+  inputEl.val("");
+}
+
+searchBtnEl.on("click", searchCity);
+$("#card-section").hide();
+$(function () {
+  $("#history-list").sortable({
+    placeholder: "ui-state-highlight",
   });
+  $("#history-list").disableSelection();
 });

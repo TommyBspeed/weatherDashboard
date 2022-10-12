@@ -4,6 +4,6 @@ My goal is to make a weather dashboard that will contain a search prompt to popu
 
 ## Currently struggling to get the API key to work properly. Work in progress.
 
-GitHub repo link: https://github.com/TommyBspeed/weatherDashboard
+GitHub repo link: https://github.com/TommyBspeed/weatherDashboardg
 
 Deployed webpage link: https://tommybspeed.github.io/weatherDashboard/

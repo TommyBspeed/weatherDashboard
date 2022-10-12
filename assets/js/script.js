@@ -1,7 +1,7 @@
 //set city input to local storage
 let city = localStorage.getItem("City");
 //API key
-var apiKey = "058d7f01e802a6a38145ceba8a650527";
+var apiKey = "ff64be15c6b54b2e827b64eebf6e2e52";
 //set date using a moment.js call
 var today = moment().format("L");
 

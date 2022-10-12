@@ -1,8 +1,6 @@
 # weatherDashboard
 
-My goal is to make a weather dashboard that will contain a search prompt to populate city, and show a 5 day forecast for that city along with a readout of the weather today for the city with info for temp, humidity, UV index and wind.
-
-## Currently struggling to get the API key to work properly. Work in progress.
+This Weather Dashboard is a simple app that contains a search prompt to populate city, and show a 5 day forecast for that city along with a readout of the weather today for the city with info for temp, humidity, UV index and wind.
 
 GitHub repo link: https://github.com/TommyBspeed/weatherDashboardg
 
